@@ -1,4 +1,4 @@
-[!initial](https://github.com/lastime1650/C.ProtegoAI/blob/main/Images/main_logo.png)
+![initial](https://github.com/lastime1650/C.ProtegoAI/blob/main/Images/main_logo.png)
 
 # C.ProtegoAI
 It is an open source-based, endpoint security solution. 
