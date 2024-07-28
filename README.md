@@ -1,5 +1,7 @@
 ![initial](https://github.com/lastime1650/C.ProtegoAI/blob/main/Images/main_logo.png)
 
+The meaning of "Protego" is the Latin word for "Protect".
+
 # C.ProtegoAI
 It is an open source-based, endpoint security solution. 
 
