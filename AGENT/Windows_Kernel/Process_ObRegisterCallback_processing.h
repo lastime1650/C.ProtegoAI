@@ -44,6 +44,14 @@ feature(4b) = Relation_index == 2
 */
 extern PDynamic_NODE Dynamic_Node_Action_Process_Node;
 
+
+
+
+//중앙서버로부터 데이터를 받은 경우, 
+#include "Length_Based_Data_Parser.h" // RUST의 길이기반을 해석해야하므로 
+BOOLEAN processing_action_with_server_Action_Process_Node(PLength_Based_DATA_Node Parsed_RAWDATA);
+
+
 // SHA256이 Action연결리스트에 존재하는가? 
 BOOLEAN is_exist_program_Action_Process_Node(PActionProcessNode input);
 

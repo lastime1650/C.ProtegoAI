@@ -24,13 +24,7 @@ BOOLEAN Create_or_Append_Action_Process_Node(PActionProcessNode input) {
 
 
 
-	if (
-		Get_Node_2Dim(
-			'Actn',
-			(PUCHAR)input,
-			sizeof(ActionProcessNode),
-			&Dynamic_Node_Action_Process_Node) != NULL
-		) {
+	if ( is_exist_program_Action_Process_Node(input) ) {
 		/* 이미 존재할 때, */
 		return FALSE;
 
@@ -93,5 +87,120 @@ BOOLEAN compare_Action_Node_with_PID(HANDLE PID, MODE Kernel_or_User) {
 	}
 
 	ExFreePoolWithTag(EXE_binary, 'FILE');
+	return TRUE;
+}
+
+
+BOOLEAN Make_ActionProcessNode_from_length_based_linked_list(PLength_Based_DATA_Node Parsed_RAWDATA, ActionProcessNode* OUTPUT_Node, BOOLEAN* OUTPUT_register_check);
+
+// 서버 요청 처리함수 ( 등록 또는 해제 )
+BOOLEAN processing_action_with_server_Action_Process_Node(PLength_Based_DATA_Node Parsed_RAWDATA) {
+	// 각 연결리스트를 조회하여 ACTION 전용 구조체로 변환
+
+	/*
+		[0] [ register_check / is_DELETE ]
+		[1] [ Method ]
+		[2] [ Sha256 ]
+		[3] [ Type ]
+	*/
+
+
+	ActionProcessNode ACTION_NODE = { 0, };
+	BOOLEAN is_register;
+	if (Make_ActionProcessNode_from_length_based_linked_list(Parsed_RAWDATA, &ACTION_NODE, &is_register) == FALSE) {
+		ULONG32 response = No; //1030
+		SEND_TCP_DATA(&response, 4, SERVER_DATA_PROCESS);
+		return FALSE;
+	}
+
+
+	if (is_register) {
+		// 등록 . 단, 중복인 경우 실패
+
+		//중복검사 + 삽입
+		if (Create_or_Append_Action_Process_Node(&ACTION_NODE)==FALSE) {
+			ULONG32 response = No; //1030
+			SEND_TCP_DATA(&response, 4, SERVER_DATA_PROCESS);
+			return FALSE;
+		}
+	}
+	else {
+		// 삭제 . 단, 이미 없는 경우 실패
+
+		//노드존재검사 
+		if (is_exist_program_Action_Process_Node(&ACTION_NODE)) {
+			if (Remove_one_node_Action_Process_Node(&ACTION_NODE) == FALSE) {
+				ULONG32 response = No; //1030
+				SEND_TCP_DATA(&response, 4, SERVER_DATA_PROCESS);
+				return FALSE;
+			}
+		}
+		else {
+			ULONG32 response = No; //1030
+			SEND_TCP_DATA(&response, 4, SERVER_DATA_PROCESS);
+			return FALSE;
+		}
+	}
+
+	// 최종 성공
+	ULONG32 response = Yes; //1030
+	SEND_TCP_DATA(&response, 4, SERVER_DATA_PROCESS);
+	return TRUE;
+}
+
+
+BOOLEAN Make_ActionProcessNode_from_length_based_linked_list(PLength_Based_DATA_Node Parsed_RAWDATA, ActionProcessNode* OUTPUT_Node, BOOLEAN* OUTPUT_is_register) {
+	/*
+		[0] [ register_check / is_DELETE ]
+		[1] [ Method ]
+		[2] [ Sha256 ]
+		[3] [ Type ]
+	*/
+	
+	// [0]
+	if (memcmp(Parsed_RAWDATA->RAW_DATA, "DELETE", Parsed_RAWDATA->RAW_DATA_Size) == 0) {
+		*OUTPUT_is_register = TRUE;
+	}
+	else {
+		*OUTPUT_is_register = FALSE;
+	}
+
+	//[1]
+	Parsed_RAWDATA = (PLength_Based_DATA_Node)Parsed_RAWDATA->Next_Address;
+	if (memcmp(Parsed_RAWDATA->RAW_DATA, "BLOCK", Parsed_RAWDATA->RAW_DATA_Size) == 0) {
+		OUTPUT_Node->is_Block = TRUE;
+	}
+	else {
+		OUTPUT_Node->is_Block = FALSE;
+	}
+
+	//[2]
+	Parsed_RAWDATA = (PLength_Based_DATA_Node)Parsed_RAWDATA->Next_Address;
+	memset(OUTPUT_Node->SHA256, 0, 65);
+	
+	if (Parsed_RAWDATA->RAW_DATA_Size <= 65) {
+		memcpy(OUTPUT_Node->SHA256, Parsed_RAWDATA->RAW_DATA, Parsed_RAWDATA->RAW_DATA_Size);
+	}
+	else {
+		return FALSE;
+	}
+	
+
+	//[3]
+	Parsed_RAWDATA = (PLength_Based_DATA_Node)Parsed_RAWDATA->Next_Address;
+	if (memcmp(Parsed_RAWDATA->RAW_DATA, "process_Create", Parsed_RAWDATA->RAW_DATA_Size) == 0) {
+		DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, " Create임 \n ");
+		OUTPUT_Node->feature = Create;
+	}
+	else if (memcmp(Parsed_RAWDATA->RAW_DATA, "process_Remove", Parsed_RAWDATA->RAW_DATA_Size) == 0) {
+		DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, " Remove임 \n ");
+		OUTPUT_Node->feature = Remove;
+	}
+	else {
+		DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, " 액션 등록 실패 \n ");
+		return FALSE;
+	}
+
+
 	return TRUE;
 }

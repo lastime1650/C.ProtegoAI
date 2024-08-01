@@ -262,14 +262,14 @@ BOOLEAN Action_PROCESSING_on_RegisterCallback(PActionProcessNode Action_Node, PO
             DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, " [Pre] Remove->Block\n");
             if ((*OperationInformation)->Operation == OB_OPERATION_HANDLE_CREATE && (*OperationInformation)->Parameters->CreateHandleInformation.OriginalDesiredAccess & PROCESS_TERMINATE) { //        1/4
 
-                (*OperationInformation)->Parameters->CreateHandleInformation.DesiredAccess = 0x0;
-                (*OperationInformation)->Parameters->CreateHandleInformation.OriginalDesiredAccess = 0x0;
+                //(*OperationInformation)->Parameters->CreateHandleInformation.DesiredAccess = 0x0;
+                //(*OperationInformation)->Parameters->CreateHandleInformation.OriginalDesiredAccess = 0x0;
 
-                //(*OperationInformation)->Parameters->CreateHandleInformation.DesiredAccess &= ~PROCESS_TERMINATE;
+                (*OperationInformation)->Parameters->CreateHandleInformation.DesiredAccess &= ~PROCESS_TERMINATE;
 
-                //if ((*OperationInformation)->Parameters->CreateHandleInformation.OriginalDesiredAccess & PROCESS_VM_OPERATION) {//      2/4
-                //    (*OperationInformation)->Parameters->CreateHandleInformation.DesiredAccess &= ~PROCESS_VM_OPERATION;
-                //}
+                if ((*OperationInformation)->Parameters->CreateHandleInformation.OriginalDesiredAccess & PROCESS_VM_OPERATION) {//      2/4
+                    (*OperationInformation)->Parameters->CreateHandleInformation.DesiredAccess &= ~PROCESS_VM_OPERATION;
+                }
 
                 /*
                 if ((*OperationInformation)->Parameters->CreateHandleInformation.OriginalDesiredAccess & PROCESS_VM_READ) {//      3/4
@@ -290,7 +290,7 @@ BOOLEAN Action_PROCESSING_on_RegisterCallback(PActionProcessNode Action_Node, PO
                     (*OperationInformation)->Parameters->DuplicateHandleInformation.DesiredAccess &= ~PROCESS_VM_OPERATION;
                 }
 
-                (*OperationInformation)->Parameters->DuplicateHandleInformation.DesiredAccess = 0;
+                //(*OperationInformation)->Parameters->DuplicateHandleInformation.DesiredAccess = 0;
 
                 break;
             }

@@ -56,7 +56,7 @@ NTSTATUS DriverEntry(PDRIVER_OBJECT driver_object, PUNICODE_STRING registry) {
 	// SM_BIOS
 	Query_SMBIOS_information();
 
-	if( Make_ObRegisterCallback() != STATUS_SUCCESS) return STATUS_UNSUCCESSFUL;
+	//if( Make_ObRegisterCallback() != STATUS_SUCCESS) return STATUS_UNSUCCESSFUL;
 
 	if (Initialize_IOCTL_communicate() == FALSE) {  // 유저모드의 요청 대기.
 		return STATUS_UNSUCCESSFUL;
@@ -84,14 +84,14 @@ NTSTATUS DriverEntry(PDRIVER_OBJECT driver_object, PUNICODE_STRING registry) {
 	/*
 		오브젝트 루틴 등록 시작!
 	*/
-	/*
+	
 	status = Make_ObRegisterCallback();
 	if (status != STATUS_SUCCESS) {//최초 프로세스 생성/제거 등록
 		//DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, "Make_ObRegisterCallback 등록실패 -> %p\n", status);
 		return STATUS_UNSUCCESSFUL;
 	}
 	DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, "Make_ObRegisterCallback 등록성공 \n");
-	*/
+	
 
 
 	/*
@@ -106,7 +106,7 @@ NTSTATUS DriverEntry(PDRIVER_OBJECT driver_object, PUNICODE_STRING registry) {
 	// 시그니처 연결리스트는 TCP 연결될 때 생성되어야함
 
 	// 미니필터 등록
-	//Initialize_Mini_Filter_Driver(driver_object);
+	Initialize_Mini_Filter_Driver(driver_object);
 
 
 	return status;

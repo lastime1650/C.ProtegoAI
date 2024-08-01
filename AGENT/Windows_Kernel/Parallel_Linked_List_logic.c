@@ -299,6 +299,10 @@ BOOLEAN Remove_1Dim_Node_with_Search_Value(PDynamic_NODE NODE_SECTION_Specified_
 		}
 	}while (current_node != NULL);
 
+	if (current_node_count == 0) {
+		Release_PKmutex(&CreateAppendRemove__Parallel_Linked_List_KMutex);
+		return FALSE;
+	}
 
 
 	current_node = external_start_node;
@@ -527,7 +531,6 @@ PDynamic_NODE Get_Node_memcmp_1Dim(
 
 /////////////////////////////////////////////////////////
 
-#include "Process_ObRegisterCallback_processing.h"
 
 PDynamic_NODE Get_Node_2Dim(
 	ULONG32 Node_Search_VALUE,
@@ -546,7 +549,7 @@ PDynamic_NODE Get_Node_2Dim(
 	do {
 
 		if (Node_Search_VALUE == current_node->Node_Search_VALUE) {
-			DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, " -- Parelle -- ((PActionProcessNode)current_node->DATA)->SHA256:: %s / %s \n", ((PActionProcessNode)current_node->DATA)->SHA256, ((PActionProcessNode)DATA)->SHA256 );
+			//DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, " -- Parelle -- ((PActionProcessNode)current_node->DATA)->SHA256:: %s / %s \n", ((PActionProcessNode)current_node->DATA)->SHA256, ((PActionProcessNode)DATA)->SHA256 );
 			if ((current_node->DATA_SIZE >= DATA_SIZE) && memcmp(current_node->DATA, DATA, DATA_SIZE) == 0) {
 				/*
 				
