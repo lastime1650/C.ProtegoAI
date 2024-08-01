@@ -6,6 +6,8 @@
 //#include "PLIST_Node_Manager.h"
 #include "SEND_or_SAVE.h"
 
+#include "Length_Based_Data_Parser.h" // RUST의 길이기반을 해석해야하므로 
+
 VOID communication_server(PVOID context) { // 지속적으로 서버로부터 리시브 상태를 만듦
 	UNREFERENCED_PARAMETER(context);
 
@@ -44,6 +46,14 @@ VOID communication_server(PVOID context) { // 지속적으로 서버로부터 리시브 상태�
 				SERVER_COMMAND server_cmd = 0;
 				memcpy(&server_cmd, Get_BUFFER, 4);// 맨 앞 4byte를 읽어 enum값 취급
 				DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, " communication_server -> server_cmd 값 : %lu \n", server_cmd);
+
+				// 지금부터는 SERVER index부분의 이상 index부터는 RAW_DATA이므로, 이를 길이-기반 연결리스트로 변환하여 인수로 넘겨준다( +4 한 주소값부터 읽어, 연결리스트로 변환 )
+				PUCHAR Start_Length_Based_ADDR = (PUCHAR)Get_BUFFER + 4;
+				ULONG32 ALL_SIZE = Get_BUFFER_len - 4;
+
+				PLength_Based_DATA_Node RAW_DATA_NODE_ADDR_from_length_based = Build_RAW_DATA(Start_Length_Based_ADDR, ALL_SIZE);
+
+
 				switch (server_cmd) {
 
 
@@ -73,31 +83,37 @@ VOID communication_server(PVOID context) { // 지속적으로 서버로부터 리시브 상태�
 					if (status != STATUS_SUCCESS) {
 						/* 실패를 서버에게 전달 ;;*/
 						ULONG32 return_enum = No;
-						SEND_TCP_DATA(&return_enum, sizeof(return_enum), SERVER_DATA_PROCESS);
+						SEND_TCP_DATA(&return_enum, 4, SERVER_DATA_PROCESS);
 					}
 					break;
 				case GET_action_process_creation: // [ Action ] 프로세스 생성에 관한 액션처리
 					/*
 						{enum값} + {4b}{Method} + {4b}{SHA256} + {4b}{TYPE} <<-- 이것은 길이기반 파싱을 해야함(반복문)
 					*/
-					Initilize_or_Locking_PKmutex(&Action_for_proces_routine_node_KMUTEX, TRUE);
-					Action_for_process_creation((PUCHAR)Get_BUFFER + 4, Get_BUFFER_len - 4);
-					Release_PKmutex(&Action_for_proces_routine_node_KMUTEX);
 
 
+					if (processing_action_with_server_Action_Process_Node(RAW_DATA_NODE_ADDR_from_length_based)) {
+						ULONG32 response = Yes; //1030
+						SEND_TCP_DATA(&response, 4, SERVER_DATA_PROCESS);
+					}
+					else {
+						ULONG32 response = No; //1030
+						SEND_TCP_DATA(&response, 4, SERVER_DATA_PROCESS);
+					}
 
-
+					break;
 
 
 				default:
 					break;
 				}
 
-
+				// 길이기반 연결리스트 삭제
+				RAW_DATA_node_FreePool(RAW_DATA_NODE_ADDR_from_length_based);
 
 				ExFreePoolWithTag(Get_BUFFER, 'RcDt');// 해제
 				KeReleaseMutex(TCP_session, FALSE); ////////////////////////////////////////////// *************Release********************************
-				Delays(-1);
+				Delays(-1);//지연
 				continue;
 			}
 
