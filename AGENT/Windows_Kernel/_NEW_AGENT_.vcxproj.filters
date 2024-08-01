@@ -1,0 +1,435 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Driver Files">
+      <UniqueIdentifier>{8E41214B-6785-4CFE-B992-037D68949A14}</UniqueIdentifier>
+      <Extensions>inf;inv;inx;mof;mc;</Extensions>
+    </Filter>
+    <Filter Include="Header Files\유틸리티">
+      <UniqueIdentifier>{d87c4fa8-b548-4914-9307-a1a31f6fc5d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\파일입출력">
+      <UniqueIdentifier>{b2b07ba6-0234-499e-8a31-f5460fdbd7f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\딜레이">
+      <UniqueIdentifier>{f9d35ef1-007e-420e-ac50-ab92461b8e4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\쿼리">
+      <UniqueIdentifier>{48dcbfbe-3905-439c-9bf9-1ca37217094d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\컨버터_변환">
+      <UniqueIdentifier>{869b693c-7e2f-4b16-bda2-31a79f5a3a3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\소켓">
+      <UniqueIdentifier>{ee1585c6-ad49-467a-97b8-54cd2b5d4900}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\해시함수">
+      <UniqueIdentifier>{dfdbe82d-d9d8-4b72-ba77-c4a89f3a73fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\해시함수\SHA256">
+      <UniqueIdentifier>{76104f19-8814-4abc-a896-670112972a55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\컨버터_변환\Unicode와 Ansi">
+      <UniqueIdentifier>{4007bf10-443a-4e66-acdc-44694df655d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\쿼리\프로세스_관련쿼리">
+      <UniqueIdentifier>{b1ecad7e-9f15-49b2-b144-965e44b64c5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\커널API_가져오기">
+      <UniqueIdentifier>{9624a2dd-fd76-4a36-ab92-50418785e32a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\소켓\소켓구축">
+      <UniqueIdentifier>{ca25bf5e-55d2-4e96-bf31-32296b57c86b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\소켓\TCP송수신_기능">
+      <UniqueIdentifier>{b0e57688-05c6-492c-91fc-be7ae88df622}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\보안솔루션_에이전트_드라이버">
+      <UniqueIdentifier>{d933196d-bb25-4642-9535-b5d5f865a8a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\보안솔루션_에이전트_드라이버\IOCTL">
+      <UniqueIdentifier>{91692f5c-2ca7-4a89-b437-7065b131c36e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\보안솔루션_에이전트_드라이버\드라이버 초기화">
+      <UniqueIdentifier>{be283a3e-5453-4843-aded-e53a503684f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\보안솔루션_에이전트_드라이버\라이선스와 에이전트 ID">
+      <UniqueIdentifier>{6633ce07-427d-45d9-af4e-fd46c227f95d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\보안솔루션_에이전트_드라이버\RUST_TCP로직">
+      <UniqueIdentifier>{dcb342cd-e7c7-4263-96f1-d70381bac96b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\보안솔루션_에이전트_드라이버\RUST_TCP로직\RUST와의 통신 맺기">
+      <UniqueIdentifier>{6a0f667f-4b3b-44bd-a3c1-3aa01fdb0a48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\보안솔루션_에이전트_드라이버\RUST_TCP로직\RUST의 명령처리 %28 연결 완료 후 %29">
+      <UniqueIdentifier>{cd5ae668-b708-4860-8a36-0e90cb4bc440}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\쿼리\프로세스_관련쿼리\프로세스_얻어오는_병렬스레드">
+      <UniqueIdentifier>{91fa2f55-3035-4ad4-91b6-2751ae3e82eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\쿼리\프로세스_관련쿼리\프로세스 정보%28절대경로%29를 얻어옴">
+      <UniqueIdentifier>{0f2413ff-de09-46b2-bbca-98dd820ee721}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\보안솔루션_에이전트_드라이버\Notify루틴_콜백함수">
+      <UniqueIdentifier>{9a7e5b28-ce31-405d-8df4-7f42786c3656}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\보안솔루션_에이전트_드라이버\Notify루틴_콜백함수\프로세스_루틴">
+      <UniqueIdentifier>{05fd54bd-3508-4297-a0c8-0afef7eb9af0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\보안솔루션_에이전트_드라이버\Register_콜백함수">
+      <UniqueIdentifier>{8dd640f8-4dcb-4db9-9d2b-d8cee3472ba2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\보안솔루션_에이전트_드라이버\RUST_전송데이터_처리">
+      <UniqueIdentifier>{a21f14aa-4fab-4519-b1a3-28d0bc8514ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\보안솔루션_에이전트_드라이버\RUST_전송데이터_처리\노드_매니저">
+      <UniqueIdentifier>{28a2682a-ef73-4e7f-af9c-3d2be1231bde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\컨버터_변환\PID to convert%28PID에서 여러가지 얻음%29">
+      <UniqueIdentifier>{16159431-a8ab-4c49-a7d1-ab47c4339f97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\보안솔루션_에이전트_드라이버\RUST_TCP로직\RUST의 명령처리 %28 연결 완료 후 %29\RUST명령_들">
+      <UniqueIdentifier>{adf478da-fcfa-4922-ba5b-6f2f4319f1cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\보안솔루션_에이전트_드라이버\길이-기반_해석기">
+      <UniqueIdentifier>{07b26d3c-a29b-4b8a-be79-568cda68b193}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\보안솔루션_에이전트_드라이버\RUST_TCP로직\RUST의 명령처리 %28 연결 완료 후 %29\RUST명령_들\프로세스 생성/삭제 등 조치 처리">
+      <UniqueIdentifier>{468f06fc-9773-44d1-b190-6ccb34b1cb61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\보안솔루션_에이전트_드라이버\RUST_TCP로직\RUST의 명령처리 %28 연결 완료 후 %29\RUST명령_들\살아있는 지 확인">
+      <UniqueIdentifier>{7d09b21e-8fd7-4392-b2fa-55eac8f3ad47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\보안솔루션_에이전트_드라이버\RUST_TCP로직\RUST의 명령처리 %28 연결 완료 후 %29\RUST명령_들\EXE바이너리 요청 처리">
+      <UniqueIdentifier>{d4077b34-c19a-4ada-b715-cf0f1646e3df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\보안솔루션_에이전트_드라이버\Register_콜백함수\Pre">
+      <UniqueIdentifier>{c4a4933f-d247-4b96-a247-a91e7bd6db5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\보안솔루션_에이전트_드라이버\Register_콜백함수\Post">
+      <UniqueIdentifier>{e49b4023-b82e-45bc-987e-f0450c49b298}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\쿼리\시스템관련">
+      <UniqueIdentifier>{fc211baa-01d3-4262-b222-a2d669b635db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\쿼리\시스템관련\SMBIOS_하드웨어_쿼리">
+      <UniqueIdentifier>{ca1659e8-42c1-4aa1-94db-54caa7b29465}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\쿼리\시스템관련\SMBIOS_하드웨어_쿼리\SMBIOS_구조체">
+      <UniqueIdentifier>{74e32afe-5383-442c-b0fd-0a3d551c99dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\공통_비동기_연결리스트">
+      <UniqueIdentifier>{53610d43-87c7-494a-acd4-7dba5d003634}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\보안솔루션_에이전트_드라이버\_미니필터전용_">
+      <UniqueIdentifier>{73ed70ee-b741-46eb-b129-2df893328463}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\외부장치_마운트_인식_PNP">
+      <UniqueIdentifier>{b6aecf57-0107-4ed7-9362-793a69ff4df5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\보안솔루션_에이전트_드라이버\_미니필터전용_\미니필터등록">
+      <UniqueIdentifier>{ae41cf9b-5679-4afc-bdee-44025efb69f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\보안솔루션_에이전트_드라이버\_미니필터전용_\미니필터_핸들러">
+      <UniqueIdentifier>{17ec126c-c6be-47b1-b86f-8db192a82d62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\보안솔루션_에이전트_드라이버\_미니필터전용_\파일_시그니처">
+      <UniqueIdentifier>{2ff2e15e-06d8-4a02-bcb4-c5c86e67721f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\보안솔루션_에이전트_드라이버\_미니필터전용_\파일_시그니처\시그니처_기반_파일감지기">
+      <UniqueIdentifier>{477482ce-02f2-4c90-9b65-c741cfdbd1d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\쿼리\문자열">
+      <UniqueIdentifier>{ab6de9e2-cf51-4a98-81dd-8adfc8eedc97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\쿼리\디렉터리">
+      <UniqueIdentifier>{dd258db8-e94a-469b-b7ca-f4211858a3ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\쿼리\Volume쿼리">
+      <UniqueIdentifier>{aa3dc889-df84-48c0-9770-e29992cc9eb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\쿼리\문자열\UNICODE">
+      <UniqueIdentifier>{7ae0eaa7-46f5-4fc9-bc5a-8a0cdfe3f54f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\보안솔루션_에이전트_드라이버\_미니필터전용_\파일_시그니처\파일_시그니처_연결리스트">
+      <UniqueIdentifier>{cb707890-f9ad-47b5-8c42-4e1fb004e061}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\쿼리\디렉터리\파일">
+      <UniqueIdentifier>{59034e86-afd7-458d-9b2e-d081c05646c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\쿼리\디렉터리\파일\파일_고유_ID">
+      <UniqueIdentifier>{8625fc97-aed2-4b54-aec2-254c86955db0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\유틸리티\Mutex">
+      <UniqueIdentifier>{32eaa6fa-62d3-4a6b-8b32-187adfed996e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Inf Include="_NEW_AGENT_.inf">
+      <Filter>Driver Files</Filter>
+    </Inf>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="util_Delay_logic.c">
+      <Filter>Header Files\유틸리티\딜레이</Filter>
+    </ClCompile>
+    <ClCompile Include="SHA256_logic.c">
+      <Filter>Header Files\유틸리티\해시함수\SHA256</Filter>
+    </ClCompile>
+    <ClCompile Include="my_ioctl_logic.c">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\IOCTL</Filter>
+    </ClCompile>
+    <ClCompile Include="converter_String_logic.c">
+      <Filter>Header Files\유틸리티\컨버터_변환\Unicode와 Ansi</Filter>
+    </ClCompile>
+    <ClCompile Include="Build_Socket_logic.c">
+      <Filter>Header Files\유틸리티\소켓\소켓구축</Filter>
+    </ClCompile>
+    <ClCompile Include="TCP_send_or_Receiver_logic.c">
+      <Filter>Header Files\유틸리티\소켓\TCP송수신_기능</Filter>
+    </ClCompile>
+    <ClCompile Include="TCP_conn_logic.c">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\RUST_TCP로직\RUST와의 통신 맺기</Filter>
+    </ClCompile>
+    <ClCompile Include="License_Agent_struct_logic.c">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\라이선스와 에이전트 ID</Filter>
+    </ClCompile>
+    <ClCompile Include="query_process_logic.c">
+      <Filter>Header Files\유틸리티\쿼리\프로세스_관련쿼리\프로세스_얻어오는_병렬스레드</Filter>
+    </ClCompile>
+    <ClCompile Include="query_process_information_logic.c">
+      <Filter>Header Files\유틸리티\쿼리\프로세스_관련쿼리\프로세스 정보%28절대경로%29를 얻어옴</Filter>
+    </ClCompile>
+    <ClCompile Include="NotifyRoutine_logic.c">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\Notify루틴_콜백함수</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessNotifyRoutine_logic.c">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\Notify루틴_콜백함수\프로세스_루틴</Filter>
+    </ClCompile>
+    <ClCompile Include="PLIST_node_logic.c">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\RUST_전송데이터_처리\노드_매니저</Filter>
+    </ClCompile>
+    <ClCompile Include="PLIST_to_Length_Based.c">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\RUST_전송데이터_처리\노드_매니저</Filter>
+    </ClCompile>
+    <ClCompile Include="PLIST_to_append_or_send.c">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\RUST_전송데이터_처리\노드_매니저</Filter>
+    </ClCompile>
+    <ClCompile Include="converter_PID_logic.c">
+      <Filter>Header Files\유틸리티\컨버터_변환\PID to convert%28PID에서 여러가지 얻음%29</Filter>
+    </ClCompile>
+    <ClCompile Include="Initialize_API_logic.c">
+      <Filter>Header Files\유틸리티\커널API_가져오기</Filter>
+    </ClCompile>
+    <ClCompile Include="File_io_logic.c">
+      <Filter>Header Files\유틸리티\파일입출력</Filter>
+    </ClCompile>
+    <ClCompile Include="SEND_or_SAVE_logic.c">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\RUST_전송데이터_처리</Filter>
+    </ClCompile>
+    <ClCompile Include="Length_Based_Data_Parser_logic.c">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\길이-기반_해석기</Filter>
+    </ClCompile>
+    <ClCompile Include="Agent_Alive_Check_processing_logic.c">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\RUST_TCP로직\RUST의 명령처리 %28 연결 완료 후 %29\RUST명령_들\살아있는 지 확인</Filter>
+    </ClCompile>
+    <ClCompile Include="communication_with_RUST_logic.c">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\RUST_TCP로직\RUST의 명령처리 %28 연결 완료 후 %29</Filter>
+    </ClCompile>
+    <ClCompile Include="EXE_bin_reqeust_processing_logic.c">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\RUST_TCP로직\RUST의 명령처리 %28 연결 완료 후 %29\RUST명령_들\EXE바이너리 요청 처리</Filter>
+    </ClCompile>
+    <ClCompile Include="ObRegisterCallback_logic.c">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\Register_콜백함수</Filter>
+    </ClCompile>
+    <ClCompile Include="Pre_ObRegisterCallback_logic.c">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\Register_콜백함수\Pre</Filter>
+    </ClCompile>
+    <ClCompile Include="Post_ObRegisterCallback_logic.c">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\Register_콜백함수\Post</Filter>
+    </ClCompile>
+    <ClCompile Include="query_system_smbios_information_logic.c">
+      <Filter>Header Files\유틸리티\쿼리\시스템관련\SMBIOS_하드웨어_쿼리</Filter>
+    </ClCompile>
+    <ClCompile Include="Parallel_Linked_List_logic.c">
+      <Filter>Header Files\유틸리티\공통_비동기_연결리스트</Filter>
+    </ClCompile>
+    <ClCompile Include="Get_Volumes_logic.c">
+      <Filter>Header Files\유틸리티\쿼리\Volume쿼리</Filter>
+    </ClCompile>
+    <ClCompile Include="PNP_mount_management_logic.c">
+      <Filter>Header Files\유틸리티\외부장치_마운트_인식_PNP</Filter>
+    </ClCompile>
+    <ClCompile Include="Query_Files_in_Directories_logic.c">
+      <Filter>Header Files\유틸리티\쿼리\디렉터리</Filter>
+    </ClCompile>
+    <ClCompile Include="minifilter_register_logic.c">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\_미니필터전용_\미니필터등록</Filter>
+    </ClCompile>
+    <ClCompile Include="policy_signature_list_manager_logic.c">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\_미니필터전용_\파일_시그니처\파일_시그니처_연결리스트</Filter>
+    </ClCompile>
+    <ClCompile Include="minifilter_handlers_logic.c">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\_미니필터전용_\미니필터_핸들러</Filter>
+    </ClCompile>
+    <ClCompile Include="Query_Files_in_Directories_with_NT_Path_logic.c">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\_미니필터전용_\파일_시그니처\시그니처_기반_파일감지기</Filter>
+    </ClCompile>
+    <ClCompile Include="Get_File_Index_INFORMATION.c">
+      <Filter>Header Files\유틸리티\쿼리\디렉터리\파일\파일_고유_ID</Filter>
+    </ClCompile>
+    <ClCompile Include="test_Unicode_word_include_logic.c">
+      <Filter>Header Files\유틸리티\쿼리\문자열\UNICODE</Filter>
+    </ClCompile>
+    <ClCompile Include="Mutex_with_Lock_logic.c">
+      <Filter>Header Files\유틸리티\Mutex</Filter>
+    </ClCompile>
+    <ClCompile Include="Process_Action_processing._logic.c">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\RUST_TCP로직\RUST의 명령처리 %28 연결 완료 후 %29\RUST명령_들\프로세스 생성/삭제 등 조치 처리</Filter>
+    </ClCompile>
+    <ClCompile Include="Process_ObRegisterCallback_processing_logic.c">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\RUST_TCP로직\RUST의 명령처리 %28 연결 완료 후 %29\RUST명령_들\프로세스 생성/삭제 등 조치 처리</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="util_Delay.h">
+      <Filter>Header Files\유틸리티\딜레이</Filter>
+    </ClInclude>
+    <ClInclude Include="File_io.h">
+      <Filter>Header Files\유틸리티\파일입출력</Filter>
+    </ClInclude>
+    <ClInclude Include="SHA256.h">
+      <Filter>Header Files\유틸리티\해시함수\SHA256</Filter>
+    </ClInclude>
+    <ClInclude Include="my_ioctl.h">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\IOCTL</Filter>
+    </ClInclude>
+    <ClInclude Include="converter_string.h">
+      <Filter>Header Files\유틸리티\컨버터_변환\Unicode와 Ansi</Filter>
+    </ClInclude>
+    <ClInclude Include="License_Agent_struct.h">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\라이선스와 에이전트 ID</Filter>
+    </ClInclude>
+    <ClInclude Include="Build_Socket.h">
+      <Filter>Header Files\유틸리티\소켓\소켓구축</Filter>
+    </ClInclude>
+    <ClInclude Include="TCP_send_or_Receiver.h">
+      <Filter>Header Files\유틸리티\소켓\TCP송수신_기능</Filter>
+    </ClInclude>
+    <ClInclude Include="TCP_conn.h">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\RUST_TCP로직\RUST와의 통신 맺기</Filter>
+    </ClInclude>
+    <ClInclude Include="communication_with_RUST.h">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\RUST_TCP로직\RUST의 명령처리 %28 연결 완료 후 %29</Filter>
+    </ClInclude>
+    <ClInclude Include="query_process.h">
+      <Filter>Header Files\유틸리티\쿼리\프로세스_관련쿼리\프로세스_얻어오는_병렬스레드</Filter>
+    </ClInclude>
+    <ClInclude Include="query_process_information.h">
+      <Filter>Header Files\유틸리티\쿼리\프로세스_관련쿼리\프로세스 정보%28절대경로%29를 얻어옴</Filter>
+    </ClInclude>
+    <ClInclude Include="NotifyRoutine.h">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\Notify루틴_콜백함수</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessNotifyRoutine.h">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\Notify루틴_콜백함수\프로세스_루틴</Filter>
+    </ClInclude>
+    <ClInclude Include="PLIST_Node_Manager.h">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\RUST_전송데이터_처리\노드_매니저</Filter>
+    </ClInclude>
+    <ClInclude Include="SEND_or_SAVE.h">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\RUST_전송데이터_처리</Filter>
+    </ClInclude>
+    <ClInclude Include="Util_converter.h">
+      <Filter>Header Files\유틸리티\컨버터_변환</Filter>
+    </ClInclude>
+    <ClInclude Include="converter_PID.h">
+      <Filter>Header Files\유틸리티\컨버터_변환\PID to convert%28PID에서 여러가지 얻음%29</Filter>
+    </ClInclude>
+    <ClInclude Include="Initialize_API.h">
+      <Filter>Header Files\유틸리티\커널API_가져오기</Filter>
+    </ClInclude>
+    <ClInclude Include="Length_Based_Data_Parser.h">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\길이-기반_해석기</Filter>
+    </ClInclude>
+    <ClInclude Include="Agent_Alive_Check_processing.h">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\RUST_TCP로직\RUST의 명령처리 %28 연결 완료 후 %29\RUST명령_들\살아있는 지 확인</Filter>
+    </ClInclude>
+    <ClInclude Include="EXE_bin_request_processing.h">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\RUST_TCP로직\RUST의 명령처리 %28 연결 완료 후 %29\RUST명령_들\EXE바이너리 요청 처리</Filter>
+    </ClInclude>
+    <ClInclude Include="RUST_command_process.h">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\RUST_TCP로직\RUST의 명령처리 %28 연결 완료 후 %29\RUST명령_들</Filter>
+    </ClInclude>
+    <ClInclude Include="ObRegisterCallback_.h">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\Register_콜백함수</Filter>
+    </ClInclude>
+    <ClInclude Include="Pre_ObRegisterCallback_.h">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\Register_콜백함수\Pre</Filter>
+    </ClInclude>
+    <ClInclude Include="Post_ObRegisterCallback_.h">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\Register_콜백함수\Post</Filter>
+    </ClInclude>
+    <ClInclude Include="query_system_smbios_information.h">
+      <Filter>Header Files\유틸리티\쿼리\시스템관련\SMBIOS_하드웨어_쿼리</Filter>
+    </ClInclude>
+    <ClInclude Include="SMBIOS_type_structs.h">
+      <Filter>Header Files\유틸리티\쿼리\시스템관련\SMBIOS_하드웨어_쿼리\SMBIOS_구조체</Filter>
+    </ClInclude>
+    <ClInclude Include="Parallel_Linked_List.h">
+      <Filter>Header Files\유틸리티\공통_비동기_연결리스트</Filter>
+    </ClInclude>
+    <ClInclude Include="Get_Volumes.h">
+      <Filter>Header Files\유틸리티\쿼리\Volume쿼리</Filter>
+    </ClInclude>
+    <ClInclude Include="PNP_mount_management.h">
+      <Filter>Header Files\유틸리티\외부장치_마운트_인식_PNP</Filter>
+    </ClInclude>
+    <ClInclude Include="Query_Files_in_Directories_with_NT_Path.h">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\_미니필터전용_\파일_시그니처\시그니처_기반_파일감지기</Filter>
+    </ClInclude>
+    <ClInclude Include="Query_Files_in_Directories.h">
+      <Filter>Header Files\유틸리티\쿼리\디렉터리</Filter>
+    </ClInclude>
+    <ClInclude Include="test_Unicode_word_include.h">
+      <Filter>Header Files\유틸리티\쿼리\문자열\UNICODE</Filter>
+    </ClInclude>
+    <ClInclude Include="minifilter_register.h">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\_미니필터전용_\미니필터등록</Filter>
+    </ClInclude>
+    <ClInclude Include="policy_signature_list_manager.h">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\_미니필터전용_\파일_시그니처\파일_시그니처_연결리스트</Filter>
+    </ClInclude>
+    <ClInclude Include="minifilter_handlers.h">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\_미니필터전용_\미니필터_핸들러</Filter>
+    </ClInclude>
+    <ClInclude Include="Get_File_Index_INFORMATION.h">
+      <Filter>Header Files\유틸리티\쿼리\디렉터리\파일\파일_고유_ID</Filter>
+    </ClInclude>
+    <ClInclude Include="Process_ObRegisterCallback_processing.h">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\RUST_TCP로직\RUST의 명령처리 %28 연결 완료 후 %29\RUST명령_들\프로세스 생성/삭제 등 조치 처리</Filter>
+    </ClInclude>
+    <ClInclude Include="Mutex_with_Lock.h">
+      <Filter>Header Files\유틸리티\Mutex</Filter>
+    </ClInclude>
+    <ClInclude Include="Process_Action_processing.h">
+      <Filter>Header Files\보안솔루션_에이전트_드라이버\RUST_TCP로직\RUST의 명령처리 %28 연결 완료 후 %29\RUST명령_들\프로세스 생성/삭제 등 조치 처리</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

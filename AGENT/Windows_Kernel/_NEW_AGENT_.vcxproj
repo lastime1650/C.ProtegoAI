@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0C43CA3F-170E-41E1-BDCE-C29074740961}</ProjectGuid>
+    <TemplateGuid>{1bc93793-694f-48fe-9372-81e2b05556fd}</TemplateGuid>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+    <Configuration>Debug</Configuration>
+    <Platform Condition="'$(Platform)' == ''">x64</Platform>
+    <RootNamespace>_NEW_AGENT_</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <TargetVersion>Windows10</TargetVersion>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
+    <ConfigurationType>Driver</ConfigurationType>
+    <DriverType>KMDF</DriverType>
+    <DriverTargetPlatform>Universal</DriverTargetPlatform>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <TargetVersion>Windows10</TargetVersion>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
+    <ConfigurationType>Driver</ConfigurationType>
+    <DriverType>KMDF</DriverType>
+    <DriverTargetPlatform>Universal</DriverTargetPlatform>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">
+    <TargetVersion>Windows10</TargetVersion>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
+    <ConfigurationType>Driver</ConfigurationType>
+    <DriverType>KMDF</DriverType>
+    <DriverTargetPlatform>Universal</DriverTargetPlatform>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
+    <TargetVersion>Windows10</TargetVersion>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
+    <ConfigurationType>Driver</ConfigurationType>
+    <DriverType>KMDF</DriverType>
+    <DriverTargetPlatform>Universal</DriverTargetPlatform>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
+    <Inf2CatUseLocalTime>true</Inf2CatUseLocalTime>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DriverSign>
+      <FileDigestAlgorithm>sha256</FileDigestAlgorithm>
+    </DriverSign>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DriverSign>
+      <FileDigestAlgorithm>sha256</FileDigestAlgorithm>
+    </DriverSign>
+    <Link>
+      <AdditionalDependencies>$(DDK_LIB_PATH)netio.lib;$(DDK_LIB_PATH)ndis.lib;$(DDK_LIB_PATH)wdm.lib;$(DDK_LIB_PATH)fwpkclnt.lib;$(DDK_LIB_PATH)wdmsec.lib;$(DDK_LIB_PATH)ksecdd.lib;$(DDK_LIB_PATH)cng.lib;$(DDK_LIB_PATH)fltMgr.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/INTEGRITYCHECK %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <ClCompile />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <DriverSign>
+      <FileDigestAlgorithm>sha256</FileDigestAlgorithm>
+    </DriverSign>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <DriverSign>
+      <FileDigestAlgorithm>sha256</FileDigestAlgorithm>
+    </DriverSign>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Inf Include="_NEW_AGENT_.inf" />
+  </ItemGroup>
+  <ItemGroup>
+    <FilesToPackage Include="$(TargetPath)" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Agent_Alive_Check_processing_logic.c" />
+    <ClCompile Include="Build_Socket_logic.c" />
+    <ClCompile Include="communication_with_RUST_logic.c" />
+    <ClCompile Include="converter_PID_logic.c" />
+    <ClCompile Include="converter_String_logic.c" />
+    <ClCompile Include="EXE_bin_reqeust_processing_logic.c" />
+    <ClCompile Include="File_io_logic.c" />
+    <ClCompile Include="Get_File_Index_INFORMATION.c" />
+    <ClCompile Include="Get_Volumes_logic.c" />
+    <ClCompile Include="Initialize_API_logic.c" />
+    <ClCompile Include="Length_Based_Data_Parser_logic.c" />
+    <ClCompile Include="License_Agent_struct_logic.c" />
+    <ClCompile Include="main.c" />
+    <ClCompile Include="minifilter_handlers_logic.c" />
+    <ClCompile Include="minifilter_register_logic.c" />
+    <ClCompile Include="Mutex_with_Lock_logic.c" />
+    <ClCompile Include="my_ioctl_logic.c" />
+    <ClCompile Include="NotifyRoutine_logic.c" />
+    <ClCompile Include="ObRegisterCallback_logic.c" />
+    <ClCompile Include="Parallel_Linked_List_logic.c" />
+    <ClCompile Include="PLIST_to_append_or_send.c" />
+    <ClCompile Include="PLIST_to_Length_Based.c" />
+    <ClCompile Include="PLIST_node_logic.c" />
+    <ClCompile Include="PNP_mount_management_logic.c" />
+    <ClCompile Include="policy_signature_list_manager_logic.c" />
+    <ClCompile Include="Post_ObRegisterCallback_logic.c" />
+    <ClCompile Include="Pre_ObRegisterCallback_logic.c" />
+    <ClCompile Include="ProcessNotifyRoutine_logic.c" />
+    <ClCompile Include="Process_Action_processing._logic.c" />
+    <ClCompile Include="Process_ObRegisterCallback_processing_logic.c" />
+    <ClCompile Include="Query_Files_in_Directories_logic.c" />
+    <ClCompile Include="Query_Files_in_Directories_with_NT_Path_logic.c" />
+    <ClCompile Include="query_process_information_logic.c" />
+    <ClCompile Include="query_process_logic.c" />
+    <ClCompile Include="query_system_smbios_information_logic.c" />
+    <ClCompile Include="SEND_or_SAVE_logic.c" />
+    <ClCompile Include="SHA256_logic.c" />
+    <ClCompile Include="TCP_conn_logic.c" />
+    <ClCompile Include="test_Unicode_word_include_logic.c" />
+    <ClCompile Include="util_Delay_logic.c" />
+    <ClCompile Include="TCP_send_or_Receiver_logic.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Agent_Alive_Check_processing.h" />
+    <ClInclude Include="Build_Socket.h" />
+    <ClInclude Include="communication_with_RUST.h" />
+    <ClInclude Include="converter_string.h" />
+    <ClInclude Include="EXE_bin_request_processing.h" />
+    <ClInclude Include="File_io.h" />
+    <ClInclude Include="Get_File_Index_INFORMATION.h" />
+    <ClInclude Include="Get_Volumes.h" />
+    <ClInclude Include="Initialize_API.h" />
+    <ClInclude Include="Length_Based_Data_Parser.h" />
+    <ClInclude Include="License_Agent_struct.h" />
+    <ClInclude Include="minifilter_handlers.h" />
+    <ClInclude Include="minifilter_register.h" />
+    <ClInclude Include="Mutex_with_Lock.h" />
+    <ClInclude Include="my_ioctl.h" />
+    <ClInclude Include="NotifyRoutine.h" />
+    <ClInclude Include="ObRegisterCallback_.h" />
+    <ClInclude Include="Parallel_Linked_List.h" />
+    <ClInclude Include="PLIST_Node_Manager.h" />
+    <ClInclude Include="PNP_mount_management.h" />
+    <ClInclude Include="policy_signature_list_manager.h" />
+    <ClInclude Include="Post_ObRegisterCallback_.h" />
+    <ClInclude Include="Pre_ObRegisterCallback_.h" />
+    <ClInclude Include="ProcessNotifyRoutine.h" />
+    <ClInclude Include="Process_Action_processing.h" />
+    <ClInclude Include="Process_ObRegisterCallback_processing.h" />
+    <ClInclude Include="Query_Files_in_Directories.h" />
+    <ClInclude Include="Query_Files_in_Directories_with_NT_Path.h" />
+    <ClInclude Include="query_process.h" />
+    <ClInclude Include="query_process_information.h" />
+    <ClInclude Include="query_system_smbios_information.h" />
+    <ClInclude Include="RUST_command_process.h" />
+    <ClInclude Include="SEND_or_SAVE.h" />
+    <ClInclude Include="SHA256.h" />
+    <ClInclude Include="SMBIOS_type_structs.h" />
+    <ClInclude Include="TCP_conn.h" />
+    <ClInclude Include="TCP_send_or_Receiver.h" />
+    <ClInclude Include="test_Unicode_word_include.h" />
+    <ClInclude Include="Util_converter.h" />
+    <ClInclude Include="util_Delay.h" />
+    <ClInclude Include="converter_PID.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
