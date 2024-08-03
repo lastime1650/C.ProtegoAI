@@ -137,6 +137,12 @@ Ppolicy_signature_struct Append_Policy_Signature_Node(Ppolicy_signature_struct N
 
 BOOLEAN Remove_All_Policy_Signature_Node();// 1-3
 
+
+BOOLEAN Remove_Specified_Policy_Signature_Node(Ppolicy_signature_struct StartNode, PUNICODE_STRING Extension);
+BOOLEAN Remove_Specified_Policy_Signature_Node_Processing(Ppolicy_signature_struct* Start_Node, Ppolicy_signature_struct* Current_Node, Ppolicy_signature_struct Specified_Node);
+
+
+
 VOID print_All_Policy_Signature_Node();
 
 //BOOLEAN Specified_Node_Remover(PUCHAR Start_Node, PUNICODE_STRING Extension); // 1-4

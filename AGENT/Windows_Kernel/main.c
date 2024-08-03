@@ -62,8 +62,6 @@ NTSTATUS DriverEntry(PDRIVER_OBJECT driver_object, PUNICODE_STRING registry) {
 		return STATUS_UNSUCCESSFUL;
 	}
 
-	
-
 
 	//HANDLE thread_handle2 = 0;
 	//status = PsCreateSystemThread(&thread_handle2, THREAD_ALL_ACCESS, NULL, NULL, NULL, Get_ALL_Process_List, NULL); // 무한 서버 연결 체크 스레드 [2/2]

@@ -47,11 +47,7 @@ VOID communication_server(PVOID context) { // Áö¼ÓÀûÀ¸·Î ¼­¹ö·ÎºÎÅÍ ¸®½Ãºê »óÅÂ¸
 				memcpy(&server_cmd, Get_BUFFER, 4);// ¸Ç ¾Õ 4byte¸¦ ÀÐ¾î enum°ª Ãë±Þ
 				DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, " communication_server -> server_cmd °ª : %lu \n", server_cmd);
 
-				// Áö±ÝºÎÅÍ´Â SERVER indexºÎºÐÀÇ ÀÌ»ó indexºÎÅÍ´Â RAW_DATAÀÌ¹Ç·Î, ÀÌ¸¦ ±æÀÌ-±â¹Ý ¿¬°á¸®½ºÆ®·Î º¯È¯ÇÏ¿© ÀÎ¼ö·Î ³Ñ°ÜÁØ´Ù( +4 ÇÑ ÁÖ¼Ò°ªºÎÅÍ ÀÐ¾î, ¿¬°á¸®½ºÆ®·Î º¯È¯ )
-				PUCHAR Start_Length_Based_ADDR = (PUCHAR)Get_BUFFER + 4;
-				ULONG32 ALL_SIZE = Get_BUFFER_len - 4;
-
-				PLength_Based_DATA_Node RAW_DATA_NODE_ADDR_from_length_based = Build_RAW_DATA(Start_Length_Based_ADDR, ALL_SIZE);
+				
 
 
 				switch (server_cmd) {
@@ -90,7 +86,12 @@ VOID communication_server(PVOID context) { // Áö¼ÓÀûÀ¸·Î ¼­¹ö·ÎºÎÅÍ ¸®½Ãºê »óÅÂ¸
 					/*
 						{enum°ª} + {4b}{Method} + {4b}{SHA256} + {4b}{TYPE} <<-- ÀÌ°ÍÀº ±æÀÌ±â¹Ý ÆÄ½ÌÀ» ÇØ¾ßÇÔ(¹Ýº¹¹®)
 					*/
+					status;
+					// Áö±ÝºÎÅÍ´Â SERVER indexºÎºÐÀÇ ÀÌ»ó indexºÎÅÍ´Â RAW_DATAÀÌ¹Ç·Î, ÀÌ¸¦ ±æÀÌ-±â¹Ý ¿¬°á¸®½ºÆ®·Î º¯È¯ÇÏ¿© ÀÎ¼ö·Î ³Ñ°ÜÁØ´Ù( +4 ÇÑ ÁÖ¼Ò°ªºÎÅÍ ÀÐ¾î, ¿¬°á¸®½ºÆ®·Î º¯È¯ )
+					PUCHAR Start_Length_Based_ADDR = (PUCHAR)Get_BUFFER + 4;
+					ULONG32 ALL_SIZE = Get_BUFFER_len - 4;
 
+					PLength_Based_DATA_Node RAW_DATA_NODE_ADDR_from_length_based = Build_RAW_DATA(Start_Length_Based_ADDR, ALL_SIZE);
 
 					if (processing_action_with_server_Action_Process_Node(RAW_DATA_NODE_ADDR_from_length_based)) {
 						ULONG32 response = Yes; //1030
@@ -101,6 +102,9 @@ VOID communication_server(PVOID context) { // Áö¼ÓÀûÀ¸·Î ¼­¹ö·ÎºÎÅÍ ¸®½Ãºê »óÅÂ¸
 						SEND_TCP_DATA(&response, 4, SERVER_DATA_PROCESS);
 					}
 
+					// ±æÀÌ±â¹Ý ¿¬°á¸®½ºÆ® »èÁ¦
+					RAW_DATA_node_FreePool(RAW_DATA_NODE_ADDR_from_length_based);
+
 					break;
 
 
@@ -108,8 +112,7 @@ VOID communication_server(PVOID context) { // Áö¼ÓÀûÀ¸·Î ¼­¹ö·ÎºÎÅÍ ¸®½Ãºê »óÅÂ¸
 					break;
 				}
 
-				// ±æÀÌ±â¹Ý ¿¬°á¸®½ºÆ® »èÁ¦
-				RAW_DATA_node_FreePool(RAW_DATA_NODE_ADDR_from_length_based);
+				
 
 				ExFreePoolWithTag(Get_BUFFER, 'RcDt');// ÇØÁ¦
 				KeReleaseMutex(TCP_session, FALSE); ////////////////////////////////////////////// *************Release********************************

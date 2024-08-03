@@ -742,6 +742,82 @@ BOOLEAN Remove_All_Policy_Signature_Node() {// 1-3
 
 //BOOLEAN Specified_Node_Remover(PUCHAR Node, PWCH signature_name, ULONG32 signature_length); // 1-4
 
+BOOLEAN Remove_Specified_Policy_Signature_Node(Ppolicy_signature_struct StartNode, PUNICODE_STRING Extension) {
+	if (StartNode == NULL) return FALSE;
+	Ppolicy_signature_struct current = StartNode;
+	
+	while (current != NULL) {
+
+		if (RtlCompareUnicodeString(&current->Extension, Extension, TRUE)) {
+			
+			Remove_Specified_Policy_Signature_Node_Processing(&Policy_Signature_Start_Node, &Policy_Signature_Current_Node, current);
+
+			return TRUE;
+		}
+
+		current = (Ppolicy_signature_struct)current->Next_Node;
+	}
+
+	return FALSE;
+}
+
+BOOLEAN Remove_Specified_Policy_Signature_Node_Processing(Ppolicy_signature_struct* Start_Node, Ppolicy_signature_struct* Current_Node, Ppolicy_signature_struct Specified_Node) {
+	if (Specified_Node == NULL || Start_Node == NULL || Current_Node == NULL || *Start_Node == NULL) return FALSE;
+
+	Specified_Node->Next_Node;
+	Specified_Node->Previous_Node;
+
+	if (Specified_Node->Previous_Node == NULL && Specified_Node->Next_Node == NULL) {
+		/*
+			전역 연결리스트 주소가 처음 주소일 때,
+		*/
+		if (*Start_Node == Specified_Node) {
+			*Start_Node = (Ppolicy_signature_struct)Specified_Node->Next_Node;
+		}
+
+		if (*Start_Node == *Current_Node) *Current_Node = *Start_Node;
+
+
+	}
+	else if (Specified_Node->Previous_Node == NULL && Specified_Node->Next_Node != NULL) {
+		((Ppolicy_signature_struct)Specified_Node->Next_Node)->Previous_Node = NULL;
+		if (*Start_Node == Specified_Node) {
+			*Start_Node = (Ppolicy_signature_struct)Specified_Node->Next_Node;
+		}
+
+		if (*Start_Node == *Current_Node) *Current_Node = *Start_Node;
+	}
+	else if (Specified_Node->Previous_Node && Specified_Node->Next_Node) {
+		/*
+			노드가 중간에 껴있는 경우.
+		*/
+		((Ppolicy_signature_struct)Specified_Node->Next_Node)->Previous_Node = (PUCHAR)((Ppolicy_signature_struct)Specified_Node->Previous_Node);
+
+	}
+	else if (Specified_Node->Previous_Node && Specified_Node->Next_Node == NULL) {
+		/*
+			노드 마지막인 경우, ( Head아님 )
+		*/
+		((Ppolicy_signature_struct)Specified_Node->Previous_Node)->Next_Node = NULL;
+
+		if (*Current_Node == Specified_Node) *Current_Node = (Ppolicy_signature_struct)Specified_Node->Previous_Node;
+
+
+	}
+	else {
+		return FALSE;
+	}
+
+	// 2차원 연결리스트 삭제
+	Specified_Node->FILEs_of_Extension_list_current_node = NULL;
+	Remove_All_Policy_Signature_files_Node(Specified_Node->FILEs_of_Extension_list_start_node);
+	
+
+	ExFreePoolWithTag(Specified_Node->Extension.Buffer, 'PoSg');
+	ExFreePoolWithTag(Specified_Node, 'PoSg');
+
+	return TRUE;
+}
 
 
 BOOLEAN Remove_Specified_Policy_Signature_files_Node(Ppolicy_signature_files_struct* Start_Node, Ppolicy_signature_files_struct* Current_Node,  Ppolicy_signature_files_struct Specified_Node) {
@@ -796,6 +872,8 @@ BOOLEAN Remove_Specified_Policy_Signature_files_Node(Ppolicy_signature_files_str
 
 	return TRUE;
 }
+
+
 
 
 

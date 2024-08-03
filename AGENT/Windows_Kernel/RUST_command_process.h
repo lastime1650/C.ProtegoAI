@@ -21,10 +21,10 @@
 // 파일(바이너리) 하나만 내놔 ( 기준은 절대경로 )
 #include "EXE_bin_request_processing.h"
 
+// Action
+#include "Process_ObRegisterCallback_processing.h"
 
-/*
-	프로세스 콜백함수 Action 처리 헤더
-*/
-#include "Process_Action_processing.h" 
+// DLP - Signatures
+#include "RUST_DLP_Get_File_SIgnatures.h"
 
 #endif

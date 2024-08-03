@@ -110,7 +110,6 @@ NTSTATUS IoControl(PDEVICE_OBJECT pDeviceObject, PIRP Irp) {
 				Irp->IoStatus.Status = status;
 				IoCompleteRequest(Irp, IO_NO_INCREMENT);// Àü¼Û
 				return status;
-
 			}
 
 			ExFreePoolWithTag(EXE, 'FILE');

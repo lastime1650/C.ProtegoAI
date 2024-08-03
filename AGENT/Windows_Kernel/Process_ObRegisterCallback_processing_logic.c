@@ -108,8 +108,7 @@ BOOLEAN processing_action_with_server_Action_Process_Node(PLength_Based_DATA_Nod
 	ActionProcessNode ACTION_NODE = { 0, };
 	BOOLEAN is_register;
 	if (Make_ActionProcessNode_from_length_based_linked_list(Parsed_RAWDATA, &ACTION_NODE, &is_register) == FALSE) {
-		ULONG32 response = No; //1030
-		SEND_TCP_DATA(&response, 4, SERVER_DATA_PROCESS);
+		
 		return FALSE;
 	}
 
@@ -119,8 +118,6 @@ BOOLEAN processing_action_with_server_Action_Process_Node(PLength_Based_DATA_Nod
 
 		//중복검사 + 삽입
 		if (Create_or_Append_Action_Process_Node(&ACTION_NODE)==FALSE) {
-			ULONG32 response = No; //1030
-			SEND_TCP_DATA(&response, 4, SERVER_DATA_PROCESS);
 			return FALSE;
 		}
 	}
@@ -130,14 +127,10 @@ BOOLEAN processing_action_with_server_Action_Process_Node(PLength_Based_DATA_Nod
 		//노드존재검사 
 		if (is_exist_program_Action_Process_Node(&ACTION_NODE)) {
 			if (Remove_one_node_Action_Process_Node(&ACTION_NODE) == FALSE) {
-				ULONG32 response = No; //1030
-				SEND_TCP_DATA(&response, 4, SERVER_DATA_PROCESS);
 				return FALSE;
 			}
 		}
 		else {
-			ULONG32 response = No; //1030
-			SEND_TCP_DATA(&response, 4, SERVER_DATA_PROCESS);
 			return FALSE;
 		}
 	}
