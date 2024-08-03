@@ -1,0 +1,1 @@
+# AI 관련 소스코드는  [https://github.com/lastime1650/AI_based_Malware_Detection_with_VirusTotal_and_MalwareBazaar](https://github.com/lastime1650/AI_based_Malware_Detection_with_VirusTotal_and_MalwareBazaar)레포지토리에 존재합니다.
