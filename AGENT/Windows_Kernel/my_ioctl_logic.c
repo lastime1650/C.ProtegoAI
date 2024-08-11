@@ -1,9 +1,10 @@
 #pragma warning(disable:4100)
 #include "my_ioctl.h"
-
+#include "Initialize_API.h"
 
 
 IOCTL_content IOCTL_share_structure = { 0, };
+KMUTEX IOCTL_access_mutex = { 0, };
 
 PDEVICE_OBJECT DeviceInitialize(IN PDRIVER_OBJECT DriverObject) {
 
@@ -35,6 +36,8 @@ PDEVICE_OBJECT DeviceInitialize(IN PDRIVER_OBJECT DriverObject) {
 
 
 	KeInitializeEvent(&IOCTL_share_structure.ioctl_event, SynchronizationEvent, FALSE); // 커널 ioctl에서 사용되는 이벤트.
+	
+	KeInitializeMutex(&IOCTL_access_mutex, 0);
 	IOCTL_share_structure.is_usermode_request = FALSE; // ioctl 유저모드에서 요청안온걸로 초기화
 	IOCTL_share_structure.ioctl_BUFFER = NULL;
 	IOCTL_share_structure.is_init = TRUE; // 초기화 동작임을 확인.
@@ -67,6 +70,7 @@ NTSTATUS DriverUnload(_In_ PDRIVER_OBJECT DriverObject) {
 
 }
 
+
 // 디바이스 접근시 처리하는 함수 ( 사용하지 않지만, IOCTL 시 기본으로 필요 ) 
 NTSTATUS CreateClose(PDEVICE_OBJECT pDeviceObject, PIRP Irp) {
 	Irp->IoStatus.Status = STATUS_SUCCESS;
@@ -89,11 +93,47 @@ NTSTATUS IoControl(PDEVICE_OBJECT pDeviceObject, PIRP Irp) {
 
 		IOCTL_share_structure.ioctl_BUFFER = (PCOMMUNICATION_IOCTL)Irp->AssociatedIrp.SystemBuffer;// 유저모드 데이터 얻기
 
+
+		/*
+			추가된,
+
+			DLL 후크 걸린 프로세스에서 IOCTL 요청이 온경우, 자동처리해야함
+
+		*/
+
+		if (IOCTL_share_structure.ioctl_BUFFER->information == HOOK_MON) {
+
+			DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, " DLL에서 요청옴 -> PID %lu , API_NAME %s \n", IOCTL_share_structure.ioctl_BUFFER->API_HOOK_MON.PID, IOCTL_share_structure.ioctl_BUFFER->API_HOOK_MON.Hooked_API_NAME);
+			Irp->IoStatus.Information = sizeof(COMMUNICATION_IOCTL);// 전송할 크기 지정( 필수 ) 
+			Irp->IoStatus.Status = status;
+			IoCompleteRequest(Irp, IO_NO_INCREMENT);// 전송
+			return status;
+		}
+
+		/*
+			===============================================================
+		*/
+
 		IOCTL_share_structure.is_usermode_request = TRUE; // 유저모드에서 요청을 받고 대기하고 있어요!!!!!
 
-		DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, "유저모드에서 요청이 왔고 대기 중입니다!\n");
+		DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, "유저모드에서 요청이 왔고 대기 중입니다!  \n");
 
+
+		
 		if (IOCTL_share_structure.is_init) {
+
+			// 특정 프로세스 핸들의 권한을 모두 접근가능하도록 조정
+			
+			PEPROCESS process_obj = NULL;
+			PsLookupProcessByProcessId((HANDLE)IOCTL_share_structure.ioctl_BUFFER->Ioctl_User_Mode_ProcessId, &process_obj);
+
+			HANDLE handle = 0;
+			ObOpenObjectByPointer(process_obj, OBJ_KERNEL_HANDLE, NULL, PROCESS_ALL_ACCESS, *PsProcessType, KernelMode, &handle);
+
+			if (handle) {
+				ZwClose(handle);
+			}
+
 			/*  Ioctl 유저모드 프로세스 보호를 위하여, ObRegisterCallbacks 연결리스트 생성*/
 			PUCHAR EXE = NULL;
 			ULONG EXE_Size = 0;
@@ -138,6 +178,7 @@ NTSTATUS IoControl(PDEVICE_OBJECT pDeviceObject, PIRP Irp) {
 
 		KeWaitForSingleObject(&IOCTL_share_structure.ioctl_event, Executive, KernelMode, FALSE, NULL); // 실행 멈춤 ( 다른 스레드에서 풀어야함 )
 
+		IOCTL_share_structure.is_usermode_request = FALSE;
 
 		if (IOCTL_share_structure.is_init) {
 			

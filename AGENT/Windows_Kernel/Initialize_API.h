@@ -245,10 +245,16 @@ typedef NTSTATUS(*Bring_ZwQueryInformationProcess)(
 	PULONG ReturnLength
 	);
 
+typedef NTSTATUS(*Bring_ObSetSecurityObjectByPointer)(
+    PVOID Object,
+    SECURITY_INFORMATION SecurityInformation,
+    PSECURITY_DESCRIPTOR SecurityDescriptor
+    );
+
 //전역 함수 포인터 변수
 extern Bring_ZwQuerySystemInformation ZwQuerySystemInformation;
 extern Bring_ZwQueryInformationProcess ZwQueryInformationProcess;
-
+extern Bring_ObSetSecurityObjectByPointer ObSetSecurityObjectByPointer;
 
 //함수
 NTSTATUS Bring_API();

@@ -32,8 +32,11 @@ BOOLEAN ListDirectories_with_extension_signature(
 				*/
 				PDynamic_NODE output = NULL;
 
+				BOOLEAN ListDir_Bool = TRUE;
+
 				ULONG32 Dynamic_NODE_Search_Value = ListDirectories(
-					&current_volume_drives_node->DRIVE_ALPHABET,
+					&current_volume_drives_node->DRIVE_NT_PATH,
+					&ListDir_Bool,
 					TRUE,
 					&current_Extensions_Signature_Node->Extension,
 					&output // 걍 무조건 넣어야함 ( 호출 후 이 값이 NULL아니면, 1개이상의 노드를 받은 것. ) 
@@ -59,7 +62,8 @@ BOOLEAN ListDirectories_with_extension_signature(
 
 						}
 
-						
+						current_Directory_files_node = (PDynamic_NODE)current_Directory_files_node->Next_Node;
+
 					} while (current_Directory_files_node !=NULL);
 
 					Remove_Node_with_Search_Value(output, Dynamic_NODE_Search_Value);
@@ -74,6 +78,10 @@ BOOLEAN ListDirectories_with_extension_signature(
 
 		current_volume_drives_node = (PALL_DEVICE_DRIVES)current_volume_drives_node->Next_Node;
 	} while (current_volume_drives_node != NULL);
+
+	// 결과 출력
+	
+
 
 	return TRUE;
 }

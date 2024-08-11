@@ -24,6 +24,7 @@ typedef enum server_cmd {
 	GET_action_process_network = 101,
 	GET_action_network = 200,
 
+	Signature_Management = 300, // DLP 시그니처 관련
 
 	Are_you_ALIVE = 999, // 너 살아있니?
 
@@ -51,6 +52,16 @@ extern KEVENT is_connected_event;
 // TCP 세션을 서버와 맺기
 VOID TCP_conn(PVOID context);
 
+// 중간에 TCP 세선이 끊어진 경우 처리
+/*
+	is_connected_event KEVENT 변수에서 스레드를 다시 재개 하도록 해야함.
+
+	만약, 이미 정책이 적용된 경우가 있는 콜백함수는 이어서 진행될 수 있다.
+	단, 모니터링은 서버에게 전달할 수 가 없음
+	PsSetCreateProcessNotifyCAllbackRoutine()
+
+*/
+VOID TCP_Disconnected_conn();
 
 // TCP 성공하면 호출되는 함수
 //VOID communication_server(PVOID context);

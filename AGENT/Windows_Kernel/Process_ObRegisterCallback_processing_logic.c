@@ -32,10 +32,12 @@ BOOLEAN Create_or_Append_Action_Process_Node(PActionProcessNode input) {
 	else {
 		/* 없을 때, */
 		if (Dynamic_Node_Action_Process_Node == NULL) {
-			return Build_up_Node((PUCHAR)input, sizeof(ActionProcessNode), TRUE, &Dynamic_Node_Action_Process_Node, 'Actn'); // 노드 최초생성
+			BOOLEAN BOOL = TRUE;
+			return Build_up_Node((PUCHAR)input, sizeof(ActionProcessNode), &BOOL, &Dynamic_Node_Action_Process_Node, 'Actn'); // 노드 최초생성
 		}
 		else {
-			return Build_up_Node((PUCHAR)input, sizeof(ActionProcessNode), FALSE, &Dynamic_Node_Action_Process_Node, 'Actn'); // 노드 추가 
+			BOOLEAN BOOL = FALSE;
+			return Build_up_Node((PUCHAR)input, sizeof(ActionProcessNode), &BOOL, &Dynamic_Node_Action_Process_Node, 'Actn'); // 노드 추가 
 		}
 
 

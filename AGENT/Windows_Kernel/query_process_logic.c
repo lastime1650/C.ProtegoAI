@@ -128,8 +128,8 @@ VOID Get_ALL_Process_List(PVOID context) {
         ULONG bufferSize = 0;
 
 
-        PGet_Process_List Start_Node = NULL;
-        PGet_Process_List Current_Node = NULL;
+        //PGet_Process_List Start_Node = NULL;
+       // PGet_Process_List Current_Node = NULL;
 
         /*
             초기 길이얻기 -> continue -> 제대로 얻음
@@ -153,11 +153,43 @@ VOID Get_ALL_Process_List(PVOID context) {
                 if (current->NextEntryOffset == 0) {
                     break;
                 }
+                
+                /*
+                    PID 얻고, 유저모드에서 접근가능한 HANDLE얻기
+
+                    그리고 비동기 스레드 하나 만들어, IOCTL 요청
+
+                */
+
+                /*
+                if (current->UniqueProcessId != (HANDLE)12212) {
+                   
+                    current = (PSYSTEM_PROCESS_INFORMATION)((PUCHAR)current + current->NextEntryOffset);
+                    continue;
+                } 
+                */
 
                 HANDLE PID = current->UniqueProcessId;
+                HANDLE PID_HANDLE = 0;
 
+                
+                Get_real_HANDLE_from_pid(PID, &PID_HANDLE, UserMode); // dn
+                DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, " UserMode_ PID -> %lu   /// 핸들2->%lu\n", PID, PID_HANDLE);
+                if (PID_HANDLE == 0) {
+                    current = (PSYSTEM_PROCESS_INFORMATION)((PUCHAR)current + current->NextEntryOffset);
+                    continue;
+                }
 
+                // 파라미터 전달
+                comunication_ioctl_for_HOOKING CONTEXT = { PID, PID_HANDLE };
 
+                ioctl_process_sender IPS = { (COMMUNICATION_IOCTL_ENUM)HOOKING_request ,&CONTEXT, {0,} };
+                KeInitializeEvent(&IPS.EVENT, SynchronizationEvent, FALSE);
+
+                HANDLE Thread = 0;
+                PsCreateSystemThread(&Thread, THREAD_ALL_ACCESS, NULL, NULL, NULL, IOCTL_process_sender_from_query, &IPS);
+                KeWaitForSingleObject(&IPS.EVENT, Executive, KernelMode, FALSE, NULL);
+                /*
                 UNICODE_STRING string = { 0, };
                 PID_to_ANSI_FULL_PATH(PID, &string, KernelMode);
 
@@ -198,14 +230,14 @@ VOID Get_ALL_Process_List(PVOID context) {
                 }
                 //DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, " [프로세스노드]PID: %llu  , SHA256: %s , FileName %wZ\n", PID, SHA256, current->ImageName);
 
-
+                */
                 current = (PSYSTEM_PROCESS_INFORMATION)((PUCHAR)current + current->NextEntryOffset);
             }
         }
 
 
 
-        Get_Process_List_Start_Address = Start_Node;
+        //Get_Process_List_Start_Address = Start_Node;
         //print_Process_Node(Get_Process_List_Start_Address);
 
 
@@ -216,6 +248,8 @@ VOID Get_ALL_Process_List(PVOID context) {
         KeReleaseMutex(&Get_Process_List_MUTEX, FALSE);
 
 
+        // 임시
+        return;
     }
 
 }

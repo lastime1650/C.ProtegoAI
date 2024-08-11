@@ -1,22 +1,22 @@
 #include "RUST_DLP_Get_File_SIgnatures.h"
 
 
-BOOLEAN Signature_append_or_remove_or_get(PLength_Based_DATA_Node INPUT) {
+BOOLEAN Signature_append_or_remove_or_get(PLength_Based_DATA_Node tester) {
+
+
 	/*
 		1. status -> 4ULONG ( enum으로.. ) 
 		2. 문자열~
 	
 	*/
-	if (INPUT->RAW_DATA_Size != sizeof(SIG_STATUS)) {
-		return FALSE;
-	}
+	SIG_STATUS SIG_command =  *( (SIG_STATUS*)tester->RAW_DATA) ;
+	tester = (PLength_Based_DATA_Node)tester->Next_Address;
 
-	PLength_Based_DATA_Node current = NULL;
+	PLength_Based_DATA_Node current = tester;
 	
-	switch (*((SIG_STATUS*)(INPUT->RAW_DATA))) {
+	switch (SIG_command) {
 	case is_register:
 		NULL;
-		current = (PLength_Based_DATA_Node)INPUT->Next_Address;
 		while (current != NULL) {
 			ANSI_STRING FILE_NAME_ANSI = { 0, };
 			FILE_NAME_ANSI.Length = (USHORT)current->RAW_DATA_Size;
@@ -44,9 +44,9 @@ BOOLEAN Signature_append_or_remove_or_get(PLength_Based_DATA_Node INPUT) {
 				}
 
 				if (is_same) {
-					// 중복이 있는 경우 continue
-					current = (PLength_Based_DATA_Node)INPUT->Next_Address;
-					continue;
+					// 중복이 있는 경우 FALSE
+					//current = (PLength_Based_DATA_Node)INPUT->Next_Address;
+					return FALSE;
 				}
 			}
 
@@ -59,9 +59,9 @@ BOOLEAN Signature_append_or_remove_or_get(PLength_Based_DATA_Node INPUT) {
 			}
 			
 
-			current = (PLength_Based_DATA_Node)INPUT->Next_Address;
+			current = (PLength_Based_DATA_Node)tester->Next_Address;
 		}
-
+		print_All_Policy_Signature_Node();
 		break;
 
 
@@ -74,7 +74,6 @@ BOOLEAN Signature_append_or_remove_or_get(PLength_Based_DATA_Node INPUT) {
 		if (Policy_Signature_Start_Node == NULL || Policy_Signature_Current_Node == NULL)
 			return FALSE;
 
-		current = (PLength_Based_DATA_Node)INPUT->Next_Address;
 		while (current != NULL) {
 			ANSI_STRING FILE_NAME_ANSI = { 0, };
 			FILE_NAME_ANSI.Length = (USHORT)current->RAW_DATA_Size;
@@ -100,7 +99,7 @@ BOOLEAN Signature_append_or_remove_or_get(PLength_Based_DATA_Node INPUT) {
 				}
 
 
-				current = (PLength_Based_DATA_Node)INPUT->Next_Address;
+				current = (PLength_Based_DATA_Node)tester->Next_Address;
 			}
 		}
 		return FALSE;
@@ -114,10 +113,9 @@ BOOLEAN Signature_append_or_remove_or_get(PLength_Based_DATA_Node INPUT) {
 		if (Policy_Signature_Start_Node == NULL || Policy_Signature_Current_Node == NULL) 
 			return FALSE;
 
-		current = (PLength_Based_DATA_Node)INPUT->Next_Address;
 		while (current != NULL) {
 			/* 아직 */
-			current = (PLength_Based_DATA_Node)INPUT->Next_Address;
+			current = (PLength_Based_DATA_Node)tester->Next_Address;
 		}
 		break;
 	default:

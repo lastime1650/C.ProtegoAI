@@ -10,6 +10,8 @@
 
 #include "converter_PID.h"
 
+#include "ioctl_process_sender.h"
+
 /* PID 로 프로세스 정보 다 얻기 */
 typedef struct _SYSTEM_PROCESS_INFORMATION {
     ULONG NextEntryOffset; // 다음 프로세스 정보 구조체까지의 바이트 오프셋

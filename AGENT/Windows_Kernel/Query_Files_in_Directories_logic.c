@@ -3,7 +3,7 @@
 
 VOID AppendBackslashToDirectoryPath(PUNICODE_STRING DirectoryPath);
 
-ULONG32 ListDirectories(PUNICODE_STRING DirectoryPath, BOOLEAN is_init, PUNICODE_STRING INPUT_Hint_Data, PDynamic_NODE* Output_Node) {
+ULONG32 ListDirectories(PUNICODE_STRING DirectoryPath, BOOLEAN* is_init, BOOLEAN need_TRUE_reserved, PUNICODE_STRING INPUT_Hint_Data, PDynamic_NODE* Output_Node) {
     if (Output_Node == NULL) return 0;
     OBJECT_ATTRIBUTES objAttr;
     HANDLE hDirectory;
@@ -12,7 +12,7 @@ ULONG32 ListDirectories(PUNICODE_STRING DirectoryPath, BOOLEAN is_init, PUNICODE
     PVOID buffer;
     ULONG bufferSize = 1024;
 
-    if (is_init && *Output_Node == NULL) {
+    if (need_TRUE_reserved && *Output_Node == NULL) {
         AppendBackslashToDirectoryPath(DirectoryPath);
         DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, " is_init -> %wZ \n", *DirectoryPath);
     }
@@ -24,7 +24,7 @@ ULONG32 ListDirectories(PUNICODE_STRING DirectoryPath, BOOLEAN is_init, PUNICODE
         FILE_DIRECTORY_FILE | FILE_SYNCHRONOUS_IO_NONALERT);
 
     if (!NT_SUCCESS(status)) {
-        DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, "Failed to open directory: %wZ, Status: 0x%08X\n", DirectoryPath, status);
+        DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, "Failed to open directory: %wZ , Status: 0x%08X\n", DirectoryPath, status);
         return 0;
     }
 
@@ -99,7 +99,7 @@ ULONG32 ListDirectories(PUNICODE_STRING DirectoryPath, BOOLEAN is_init, PUNICODE
             RtlCopyMemory(unc_buffer, DirectoryPath->Buffer, DirectoryPath->Length);
 
             // [2/3] Path separator 복사
-            if (is_init == FALSE) {
+            if (need_TRUE_reserved == FALSE) {
                 RtlCopyMemory((PUCHAR)unc_buffer + DirectoryPath->Length, path_conn, sizeof(path_conn) - sizeof(WCHAR));
 
 
@@ -129,9 +129,7 @@ ULONG32 ListDirectories(PUNICODE_STRING DirectoryPath, BOOLEAN is_init, PUNICODE
             if (dirInfo->FileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
                 /* 일반 디렉터리 */
 
-                //DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, "[전체_디스크_스캔] [디렉터리] -> %wZ\n", &fullPath);
-                ListDirectories(&fullPath, FALSE, INPUT_Hint_Data, Output_Node);
-
+                ListDirectories(&fullPath, is_init, FALSE, INPUT_Hint_Data, Output_Node);
 
             }
             else {
@@ -140,6 +138,7 @@ ULONG32 ListDirectories(PUNICODE_STRING DirectoryPath, BOOLEAN is_init, PUNICODE
                 if (INPUT_Hint_Data != NULL) {
 
                     if (ContainsStringInsensitive(&fullPath, INPUT_Hint_Data)) {
+                        DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, "[전체_디스크_스캔] [파일] -> %wZ\n", &fullPath);
                         Build_up_Node((PUCHAR)fullPath.Buffer, fullPath.MaximumLength, is_init, Output_Node, 'Dirs');
                     }
                     
@@ -197,6 +196,7 @@ ULONG32 ListDirectories(PUNICODE_STRING DirectoryPath, BOOLEAN is_init, PUNICODE
     return 'Dirs';
 }
 
+/////////////
 
 
 VOID AppendBackslashToDirectoryPath(PUNICODE_STRING DirectoryPath)

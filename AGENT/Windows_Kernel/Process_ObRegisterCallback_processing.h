@@ -55,7 +55,7 @@ BOOLEAN processing_action_with_server_Action_Process_Node(PLength_Based_DATA_Nod
 // SHA256이 Action연결리스트에 존재하는가? 
 BOOLEAN is_exist_program_Action_Process_Node(PActionProcessNode input);
 
-BOOLEAN compare_Action_Node_with_PID(HANDLE PID, MODE Kernel_or_User);
+BOOLEAN		compare_Action_Node_with_PID(HANDLE PID, MODE Kernel_or_User);
 
 // 연결리스트 노드 하나 삭제
 BOOLEAN Remove_one_node_Action_Process_Node(PActionProcessNode input);

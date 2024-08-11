@@ -16,7 +16,7 @@ BOOLEAN Build_up_Node(
 	PUCHAR DATA,
 	ULONG32 DATA_SIZE,
 
-	BOOLEAN is_init,
+	BOOLEAN* is_init,
 	PDynamic_NODE* output_Start_Node_of_NODE_SECTION, // index 섹션 노드들의 시작주소 
 
 	ULONG32 Node_Search_VALUE
@@ -25,11 +25,10 @@ BOOLEAN Build_up_Node(
 
 	if (output_Start_Node_of_NODE_SECTION == NULL) return FALSE;
 	
-
 	if (Initilize_or_Locking_PKmutex(&CreateAppendRemove__Parallel_Linked_List_KMutex,TRUE) == FALSE) return FALSE;
 
 	if (external_current_node == NULL) {
-		if (is_init) {
+		if (*is_init) {
 			external_current_NODE_SECTION_INDEX++;
 			external_current_node = Create_Node(NULL, NULL, external_current_NODE_SECTION_INDEX, DATA, DATA_SIZE, Node_Search_VALUE);
 			external_start_node = external_current_node;
@@ -41,7 +40,7 @@ BOOLEAN Build_up_Node(
 
 	}
 	else {
-		if (is_init) {
+		if (*is_init) {
 			external_current_NODE_SECTION_INDEX++;
 			external_current_node = Append_Node(NULL, external_current_node, external_current_NODE_SECTION_INDEX, DATA, DATA_SIZE, Node_Search_VALUE);
 
@@ -51,9 +50,10 @@ BOOLEAN Build_up_Node(
 		}
 	}
 
-	if (is_init) {
+	if (*is_init) {
 		// 최초 노드생성시에만 해당 SECTION의 노드 시작주소가 저장됨
 		*output_Start_Node_of_NODE_SECTION = external_current_node;
+		*is_init = FALSE;
 		// 그리고 검증도 보장되도록, 다음 호출시, 시작노드값을 가져와서 필요한 정보를 가져와서 노드추가함
 	}
 

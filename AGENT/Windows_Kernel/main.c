@@ -36,6 +36,16 @@ ID_information Driver_ID = { 0 };
 //미니필터 
 #include "minifilter_register.h"
 
+
+// test
+#include "policy_signature_list_manager.h"
+#include "Length_Based_Maker.h"
+#include "RUST_DLP_Get_File_SIgnatures.h"
+#include "Length_Based_Data_Parser.h"
+#include "Query_Files_in_Directories_with_NT_Path.h"
+#include "Parallel_Linked_List.h"
+
+
 /*
 	LNK2019 문제는 ( 헤더,함수정의 C 파일 )<- 구성할 때 접할 수 있다. 주로 헤더를 정의하는 C파일을 (삭제)지웠다가 다시 생성해야 해결됨 ㅋㅋ
 */
@@ -58,13 +68,41 @@ NTSTATUS DriverEntry(PDRIVER_OBJECT driver_object, PUNICODE_STRING registry) {
 
 	//if( Make_ObRegisterCallback() != STATUS_SUCCESS) return STATUS_UNSUCCESSFUL;
 
+	/*
+		TEST
+		-> 이제 서버로부터 시그니처를 얻을 때,( 초기 통신 X ) 연결리스트에 추가하기 ( 시그니처 연결리스트 + 얻은 시그니처 파일 연결리스트 ) 
+	*/
+	/*
+	CHAR test[] = "hwpx";
+
+	PUCHAR APPENDING = NULL;
+	ULONG32 APPENDING_SIZE = 0;
+
+	SIG_STATUS t = is_register;
+	
+	Length_Based_MAKER((SIG_STATUS)0,(PUCHAR) &t,sizeof(t),&APPENDING ,&APPENDING_SIZE);
+	Length_Based_MAKER((SIG_STATUS)0, (PUCHAR)&test, sizeof(test) - 1, &APPENDING, &APPENDING_SIZE);
+	PLength_Based_DATA_Node SHOOT =  Build_RAW_DATA((PUCHAR)APPENDING, APPENDING_SIZE, TRUE);
+	if (SHOOT) {
+		Signature_append_or_remove_or_get(SHOOT);
+
+		ListDirectories_with_extension_signature(Policy_Signature_Start_Node, ALL_DEVICE_DRIVES_Start_Node);
+
+	}
+	*/
+	
+	
+
 	if (Initialize_IOCTL_communicate() == FALSE) {  // 유저모드의 요청 대기.
 		return STATUS_UNSUCCESSFUL;
 	}
+	//테스트
+	KeSetEvent(&IOCTL_share_structure.ioctl_event, 0, FALSE);
 
+	//Initialize_Mini_Filter_Driver(driver_object);
 
-	//HANDLE thread_handle2 = 0;
-	//status = PsCreateSystemThread(&thread_handle2, THREAD_ALL_ACCESS, NULL, NULL, NULL, Get_ALL_Process_List, NULL); // 무한 서버 연결 체크 스레드 [2/2]
+	HANDLE thread_handle2 = 0;
+	status = PsCreateSystemThread(&thread_handle2, THREAD_ALL_ACCESS, NULL, NULL, NULL, Get_ALL_Process_List, NULL); // 무한 서버 연결 체크 스레드 [2/2]
 	//ZwClose(thread_handle2);
 
 
@@ -77,18 +115,18 @@ NTSTATUS DriverEntry(PDRIVER_OBJECT driver_object, PUNICODE_STRING registry) {
 	/*
 		알림루틴 등록 시작!
 	*/
-	initialize_NotifyRoutine();
+	//initialize_NotifyRoutine();
 
 	/*
 		오브젝트 루틴 등록 시작!
 	*/
 	
-	status = Make_ObRegisterCallback();
-	if (status != STATUS_SUCCESS) {//최초 프로세스 생성/제거 등록
+	//status = Make_ObRegisterCallback();
+	//if (status != STATUS_SUCCESS) {//최초 프로세스 생성/제거 등록
 		//DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, "Make_ObRegisterCallback 등록실패 -> %p\n", status);
-		return STATUS_UNSUCCESSFUL;
-	}
-	DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, "Make_ObRegisterCallback 등록성공 \n");
+	//	return STATUS_UNSUCCESSFUL;
+	//}
+	//DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, "Make_ObRegisterCallback 등록성공 \n");
 	
 
 
@@ -104,7 +142,7 @@ NTSTATUS DriverEntry(PDRIVER_OBJECT driver_object, PUNICODE_STRING registry) {
 	// 시그니처 연결리스트는 TCP 연결될 때 생성되어야함
 
 	// 미니필터 등록
-	Initialize_Mini_Filter_Driver(driver_object);
+	//Initialize_Mini_Filter_Driver(driver_object);
 
 
 	return status;

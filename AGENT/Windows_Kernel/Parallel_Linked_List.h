@@ -94,7 +94,9 @@ BOOLEAN Build_up_Node(
 	PUCHAR DATA,
 	ULONG32 DATA_SIZE,
 
-	BOOLEAN is_init,
+	BOOLEAN* is_init,
+
+
 	PDynamic_NODE* output_Start_Node_of_NODE_SECTION, // index 섹션 시작 점의 노드 주소를 반환 ( index갱신될 때 대비용 )  
 	ULONG32 Node_Search_VALUE // 노드 타입을 의미함 (태그) 
 

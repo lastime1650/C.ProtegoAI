@@ -15,7 +15,6 @@
 #include "Parallel_Linked_List.h"
 #define Node_Search_Value = 'Dirs';
 
-
 /*
 	디렉터리 순회하여 파일 및 디렉터리 찾을 수 있음
 
@@ -39,11 +38,15 @@
 #include "test_Unicode_word_include.h" // ContainsStringInsensitive()
 ULONG32 ListDirectories(
 	
-	PUNICODE_STRING DirectoryPath, BOOLEAN is_init, 
-	
+	PUNICODE_STRING DirectoryPath, 
+	BOOLEAN* is_init, 
+
+	BOOLEAN need_TRUE_reserved, // 무조건 TRUE를 써라! ( 내부용임 )
 	PUNICODE_STRING INPUT_Hint_Data,
 	
 	PDynamic_NODE* Output_Node);
+
+
 
 BOOLEAN ListDirectories_PoolFree(PDynamic_NODE Node_for_PoolFREE, ULONG32 Dir_Search_Value);
 

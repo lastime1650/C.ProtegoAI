@@ -30,14 +30,23 @@ NTSTATUS Get_real_HANDLE_from_pid(HANDLE INPUT_pid, HANDLE* OUTPUT_real_handle, 
 		ObDereferenceObject(eprocess);
 	}
 	else {
-		OBJECT_ATTRIBUTES objAttributes;
-		CLIENT_ID clientId;
+		PEPROCESS process_obj = NULL;
+		PsLookupProcessByProcessId(INPUT_pid, &process_obj);
 
-		InitializeObjectAttributes(&objAttributes, NULL, 0, NULL, NULL);
-		clientId.UniqueProcess = (HANDLE)INPUT_pid;
-		clientId.UniqueThread = NULL;
+		if (process_obj == NULL) {
+			status = STATUS_UNSUCCESSFUL;
+		}
+		else {
+			KAPC_STATE t = { 0 };
+			KeStackAttachProcess(process_obj, &t);
+			ObOpenObjectByPointer(process_obj, 0, NULL, PROCESS_ALL_ACCESS, *PsProcessType, UserMode, OUTPUT_real_handle);
+			KeUnstackDetachProcess(&t);
+			if (*OUTPUT_real_handle == 0) {
+				status = STATUS_UNSUCCESSFUL;
+			}
+		}
 
-		status = ZwOpenProcess(OUTPUT_real_handle, PROCESS_ALL_ACCESS, &objAttributes, &clientId);
+		
 	}
 
 	

@@ -60,3 +60,16 @@ VOID TCP_conn(PVOID context) {
 
 	}
 }
+
+
+
+VOID TCP_Disconnected_conn() {
+	if (is_connected_2_SERVER != TRUE) return;
+
+
+	is_connected_2_SERVER = FALSE;
+	Delays(-2);// 완전히 작업이 종료될 때까지 어느정도의 지연
+	KeSetEvent(&is_connected_event, 0, FALSE);
+
+	return;
+}

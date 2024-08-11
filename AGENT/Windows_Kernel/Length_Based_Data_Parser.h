@@ -49,14 +49,14 @@ BOOLEAN Get_RAW_DATA_one_time_from_Length_Based_DATA(
 /* 길이기반을 해석하고, 연결리스트를 구축하는 함수 */
 PLength_Based_DATA_Node Build_RAW_DATA(
 	PUCHAR Input_Start_RAW_DATA,
-	ULONG32 Input_RAW_DATA_ALL_SIZE
+	ULONG32 Input_RAW_DATA_ALL_SIZE,
+	BOOLEAN is_with_Command_Header
 );
 
 /* 연결리스트 전체 할당해제 */
 VOID RAW_DATA_node_FreePool(
 	PLength_Based_DATA_Node Start_Node
 );
-
 
 
 

@@ -73,8 +73,15 @@ BOOLEAN Get_RAW_DATA_one_time_from_Length_Based_DATA(
 
 PLength_Based_DATA_Node Build_RAW_DATA(
 	PUCHAR Input_Start_RAW_DATA,
-	ULONG32 Input_RAW_DATA_ALL_SIZE
+	ULONG32 Input_RAW_DATA_ALL_SIZE,
+	BOOLEAN is_with_Command_Header
 ) {
+
+	if (is_with_Command_Header) {
+		// index 교정 ( 명령 Header 4바이트가 있으면 앞으로 당겨야함 ) 
+		Input_Start_RAW_DATA += 4;
+		Input_RAW_DATA_ALL_SIZE -= 4;
+	}
 
 	PLength_Based_DATA_Node Output_Address = NULL;
 	PLength_Based_DATA_Node tmp_node = NULL;
